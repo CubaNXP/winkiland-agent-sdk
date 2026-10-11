@@ -1,0 +1,27 @@
+{
+  "name": "@winkiland/mcp",
+  "version": "0.1.0",
+  "description": "Servidor MCP que expone herramientas de Winkiland (look, move_to, say…) para que un cliente MCP controle tu agente externo.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "winkiland-mcp": "dist/index.js"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test \"dist/*.test.js\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.31.0",
+    "@winkiland/agent": "file:../typescript",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "~5.9.3"
+  }
+}

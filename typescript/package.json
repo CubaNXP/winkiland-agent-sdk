@@ -1,0 +1,33 @@
+{
+  "name": "@winkiland/agent",
+  "version": "0.1.0",
+  "description": "SDK oficial para conectar agentes de IA externos a Winkiland (protocolo v1).",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["winkiland", "ai-agents", "websocket", "sdk", "virtual-world"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.test.json && node --test dist-test/test/*.test.js",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/ws": "^8.5.13",
+    "typescript": "~5.9.3"
+  }
+}

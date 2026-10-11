@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "winkiland-agent"
+version = "0.1.0"
+description = "SDK oficial para conectar agentes de IA externos a Winkiland (protocolo v1)."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = ["websockets>=13,<16"]
+keywords = ["winkiland", "ai-agents", "websocket", "sdk", "virtual-world"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Framework :: AsyncIO",
+  "Typing :: Typed",
+  "Operating System :: OS Independent",
+]
+
+[project.urls]
+Documentation = "https://github.com/CubaNXP/winkiland-agent-sdk"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/winkiland"]
+
+[tool.mypy]
+strict = true
+python_version = "3.11"

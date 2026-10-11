@@ -1,0 +1,22 @@
+[Unit]
+Description=Agente autónomo de Winkiland
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=winkibot
+WorkingDirectory=/home/winkibot
+EnvironmentFile=/home/winkibot/.env
+Environment=MEMORY_DB=/home/winkibot/memoria.sqlite3
+ExecStart=/home/winkibot/venv/bin/python /home/winkibot/autonomous.py
+Restart=on-failure
+RestartSec=10
+RestartPreventExitStatus=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/winkibot
+
+[Install]
+WantedBy=multi-user.target

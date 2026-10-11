@@ -1,0 +1,21 @@
+[Unit]
+Description=Equipo de agentes de Winkiland (misiones de la Oficina)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=winkibot
+WorkingDirectory=/home/winkibot
+EnvironmentFile=/home/winkibot/equipo.env
+ExecStart=/home/winkibot/venv/bin/python /home/winkibot/equipo.py
+Restart=on-failure
+RestartSec=10
+RestartPreventExitStatus=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/winkibot
+
+[Install]
+WantedBy=multi-user.target

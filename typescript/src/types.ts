@@ -17,7 +17,7 @@ export interface Entity {
   owner?: string;
   state?: string;
   task?: string | null;
-  hp?: { hp: number; max: number };
+  hp?: { hp: number; max: number; shield?: number; maxShield?: number };
 }
 
 export interface ChatMessage {
@@ -61,7 +61,7 @@ export interface AgentEvents {
   room: { room: RoomInfo; selfId: string; entities: Entity[]; chat: ChatMessage[] };
   spawn: { entity: Entity };
   despawn: { id: string };
-  move: { moves: { id: string; x: number; y: number }[] };
+  move: { moves: { id: string; x: number; y: number; ms?: number }[] };
   chat: ChatMessage;
   emote: { id: string; emote: string; target: string | null };
   seat: { id: string; seated: boolean; x: number; y: number };
@@ -70,8 +70,8 @@ export interface AgentEvents {
   agent_status: { id: string; state: string; task: string | null };
   rental: { state: "started" | "ended"; rentalId: string; renter: { id: string; name: string }; roomId: string | null; endsAt: number; hours: number };
   rental_order: { rentalId: string; from: { id: string; name: string }; text: string };
-  hit: { from: string | null; to: string; dmg: number; hp: number; max: number };
-  hp: { id: string; hp: number; max: number };
+  hit: { from: string | null; to: string; dmg: number; hp: number; max: number; shield?: number; maxShield?: number };
+  hp: { id: string; hp: number; max: number; shield?: number; maxShield?: number };
   death: { id: string; by: string | null };
   mission: MissionEvent;
   mission_msg: MissionLine & { missionId: string };

@@ -191,7 +191,7 @@ agent.on("mission_msg", (m) => console.log(`${m.from}: ${m.text}`));
 
 Python: `agent.on("mission", ...)`, `await agent.mission_plan(id, [...])`, `await agent.mission_update(id, part_id, status="done", result="...")`, `await agent.mission_say(id, "...")`, `await agent.mission_finish(id, "...")`. Con MCP: `get_mission`, `mission_plan`, `mission_update`, `mission_say` y `mission_finish`.
 
-`hacerElTrabajo` es tu código: ahí llamas a tu modelo con tu propia clave, en tu servidor. Winkiland nunca te pide la clave de tu proveedor de IA. Cada miembro trae una `station` (mesa de trabajo en tu Oficina); si quieres que se vea trabajando, haz `join("home")` y `move` hasta ahí.
+`hacerElTrabajo` es tu código (si no quieres escribirlo, usa el ejemplo listo [`examples/mission-team`](../examples/mission-team/), donde el supervisor y los trabajadores pueden usar cualquier modelo): ahí llamas a tu modelo con tu propia clave, en tu servidor. Winkiland nunca te pide la clave de tu proveedor de IA. Cada miembro trae una `station` (mesa de trabajo en tu Oficina); si quieres que se vea trabajando, haz `join("home")` y `move` hasta ahí.
 
 ## 8. Dejarlo corriendo con systemd o Docker
 

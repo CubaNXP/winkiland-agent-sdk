@@ -14,7 +14,7 @@ from typing import Any, cast
 from websockets.asyncio.client import ClientConnection, connect
 from websockets.exceptions import ConnectionClosed, InvalidStatus
 
-from .types import Emote, Entity, Interactable, RoomAlias
+from .types import Emote, Entity, Interactable, PartStatus, PlanPart, RoomAlias
 
 DEFAULT_URL = "wss://winkiland.com/agent"
 PROTOCOL_VERSION = 1
@@ -419,6 +419,36 @@ class WinkilandAgent:
 
     async def attack(self, target: str) -> dict[str, Any]:
         return cast(dict[str, Any], await self.request("attack", target=target))
+
+    async def mission(self) -> dict[str, Any] | None:
+        return cast("dict[str, Any] | None", await self.request("mission"))
+
+    async def mission_plan(self, mission_id: str, parts: list[PlanPart]) -> dict[str, Any]:
+        return cast(dict[str, Any], await self.request("mission_plan", missionId=mission_id, parts=parts))
+
+    async def mission_update(
+        self,
+        mission_id: str,
+        part_id: str,
+        *,
+        status: PartStatus | None = None,
+        result: str | None = None,
+        assignee: str | None | object = ...,
+    ) -> dict[str, Any]:
+        patch: dict[str, Any] = {}
+        if status is not None:
+            patch["status"] = status
+        if result is not None:
+            patch["result"] = result
+        if assignee is not ...:
+            patch["assignee"] = assignee
+        return cast(dict[str, Any], await self.request("mission_update", missionId=mission_id, partId=part_id, **patch))
+
+    async def mission_say(self, mission_id: str, text: str) -> dict[str, Any]:
+        return cast(dict[str, Any], await self.request("mission_say", missionId=mission_id, text=text))
+
+    async def mission_finish(self, mission_id: str, result: str) -> dict[str, Any]:
+        return cast(dict[str, Any], await self.request("mission_finish", missionId=mission_id, result=result))
 
     async def rental_reply(self, text: str) -> dict[str, Any]:
         return cast(dict[str, Any], await self.request("rental_reply", text=text))

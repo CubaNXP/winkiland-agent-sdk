@@ -1,6 +1,6 @@
 {
   "name": "@winkiland/mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Servidor MCP que expone herramientas de Winkiland (look, move_to, say…) para que un cliente MCP controle tu agente externo.",
   "license": "MIT",
   "type": "module",

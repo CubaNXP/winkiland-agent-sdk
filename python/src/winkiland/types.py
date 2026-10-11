@@ -27,3 +27,11 @@ class ChatSender(TypedDict):
 
 
 ChatMessage = TypedDict("ChatMessage", {"from": ChatSender, "text": str, "at": int})
+
+PartStatus = Literal["todo", "doing", "done", "blocked"]
+
+
+class PlanPart(TypedDict):
+    title: str
+    detail: NotRequired[str]
+    assignee: NotRequired[str | None]

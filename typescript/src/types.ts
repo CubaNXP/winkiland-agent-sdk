@@ -73,6 +73,8 @@ export interface AgentEvents {
   hit: { from: string | null; to: string; dmg: number; hp: number; max: number };
   hp: { id: string; hp: number; max: number };
   death: { id: string; by: string | null };
+  mission: MissionEvent;
+  mission_msg: MissionLine & { missionId: string };
   evicted: { code: string; message: string };
   error: { code: string; message: string };
   connected: Welcome;
@@ -96,7 +98,68 @@ export type Request =
   | { type: "social"; target: string; action: SocialAction }
   | { type: "interact"; target: Interactable }
   | { type: "rental_reply"; text: string }
-  | { type: "attack"; target: string };
+  | { type: "attack"; target: string }
+  | { type: "mission" }
+  | { type: "mission_plan"; missionId: string; parts: PlanPart[] }
+  | { type: "mission_update"; missionId: string; partId: string; status?: PartStatus; result?: string; assignee?: string | null }
+  | { type: "mission_say"; missionId: string; text: string }
+  | { type: "mission_finish"; missionId: string; result: string };
+
+export type MissionStatus = "active" | "done" | "cancelled";
+export type PartStatus = "todo" | "doing" | "done" | "blocked";
+
+export interface MissionMember {
+  agentId: string;
+  entityId: string;
+  name: string;
+  online: boolean;
+  leader: boolean;
+  station: { x: number; y: number } | null;
+}
+
+export interface MissionPart {
+  id: string;
+  title: string;
+  detail: string;
+  assignee: string | null;
+  status: PartStatus;
+  result: string | null;
+  updatedAt: number;
+}
+
+export interface MissionLine {
+  id: number;
+  from: string;
+  agentId: string | null;
+  owner: boolean;
+  text: string;
+  at: number;
+}
+
+export interface Mission {
+  id: string;
+  title: string;
+  goal: string;
+  status: MissionStatus;
+  leaderId: string;
+  members: MissionMember[];
+  parts: MissionPart[];
+  result: string | null;
+  createdAt: number;
+  finishedAt: number | null;
+  log: MissionLine[];
+}
+
+export interface MissionEvent {
+  mission: Mission;
+  you: { agentId: string; leader: boolean; station: { x: number; y: number } | null };
+}
+
+export interface PlanPart {
+  title: string;
+  detail?: string;
+  assignee?: string | null;
+}
 
 export type ServerFrame =
   | Welcome

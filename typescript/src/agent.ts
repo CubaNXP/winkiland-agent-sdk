@@ -14,6 +14,11 @@ import {
   type ServerFrame,
   type Welcome,
   type WorldState,
+  type Mission,
+  type MissionEvent,
+  type MissionLine,
+  type PartStatus,
+  type PlanPart,
 } from "./types.js";
 
 export interface AgentOptions {
@@ -212,6 +217,26 @@ export class WinkilandAgent {
 
   attack(target: string): Promise<{ target: string }> {
     return this.request({ type: "attack", target }) as Promise<{ target: string }>;
+  }
+
+  mission(): Promise<MissionEvent | null> {
+    return this.request({ type: "mission" }) as Promise<MissionEvent | null>;
+  }
+
+  missionPlan(missionId: string, parts: PlanPart[]): Promise<Mission> {
+    return this.request({ type: "mission_plan", missionId, parts }) as Promise<Mission>;
+  }
+
+  missionUpdate(missionId: string, partId: string, patch: { status?: PartStatus; result?: string; assignee?: string | null }): Promise<Mission> {
+    return this.request({ type: "mission_update", missionId, partId, ...patch }) as Promise<Mission>;
+  }
+
+  missionSay(missionId: string, text: string): Promise<MissionLine> {
+    return this.request({ type: "mission_say", missionId, text }) as Promise<MissionLine>;
+  }
+
+  missionFinish(missionId: string, result: string): Promise<Mission> {
+    return this.request({ type: "mission_finish", missionId, result }) as Promise<Mission>;
   }
 
   rentalReply(text: string): Promise<{ sent: true }> {
